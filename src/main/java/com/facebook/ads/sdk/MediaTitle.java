@@ -74,7 +74,7 @@ public class MediaTitle extends APINode {
   @SerializedName("id")
   private String mId = null;
   @SerializedName("image_fetch_status")
-  private String mImageFetchStatus = null;
+  private EnumImageFetchStatus mImageFetchStatus = null;
   @SerializedName("images")
   private List<String> mImages = null;
   @SerializedName("kg_fb_id")
@@ -93,6 +93,8 @@ public class MediaTitle extends APINode {
   private Object mUnitPrice = null;
   @SerializedName("url")
   private String mUrl = null;
+  @SerializedName("visibility")
+  private EnumVisibility mVisibility = null;
   @SerializedName("wiki_data_item")
   private String mWikiDataItem = null;
   protected static Gson gson = null;
@@ -304,8 +306,16 @@ public class MediaTitle extends APINode {
     return getGson().toJson(this);
   }
 
+  public APIRequestGetAugmentedRealitiesMetadata getAugmentedRealitiesMetadata() {
+    return new APIRequestGetAugmentedRealitiesMetadata(this.getPrefixedId().toString(), context);
+  }
+
   public APIRequestGetChannelsToIntegrityStatus getChannelsToIntegrityStatus() {
     return new APIRequestGetChannelsToIntegrityStatus(this.getPrefixedId().toString(), context);
+  }
+
+  public APIRequestGetVideosMetadata getVideosMetadata() {
+    return new APIRequestGetVideosMetadata(this.getPrefixedId().toString(), context);
   }
 
   public APIRequestDelete delete() {
@@ -360,7 +370,7 @@ public class MediaTitle extends APINode {
     return mId;
   }
 
-  public String getFieldImageFetchStatus() {
+  public EnumImageFetchStatus getFieldImageFetchStatus() {
     return mImageFetchStatus;
   }
 
@@ -400,11 +410,119 @@ public class MediaTitle extends APINode {
     return mUrl;
   }
 
+  public EnumVisibility getFieldVisibility() {
+    return mVisibility;
+  }
+
   public String getFieldWikiDataItem() {
     return mWikiDataItem;
   }
 
 
+
+  public static class APIRequestGetAugmentedRealitiesMetadata extends APIRequest<APINode> {
+
+    APINodeList<APINode> lastResponse = null;
+    @Override
+    public APINodeList<APINode> getLastResponse() {
+      return lastResponse;
+    }
+    public static final String[] PARAMS = {
+    };
+
+    public static final String[] FIELDS = {
+    };
+
+    @Override
+    public APINodeList<APINode> parseResponse(String response, String header) throws APIException {
+      return APINode.parseResponse(response, getContext(), this, header);
+    }
+
+    @Override
+    public APINodeList<APINode> execute() throws APIException {
+      return execute(new HashMap<String, Object>());
+    }
+
+    @Override
+    public APINodeList<APINode> execute(Map<String, Object> extraParams) throws APIException {
+      ResponseWrapper rw = executeInternal(extraParams);
+      lastResponse = parseResponse(rw.getBody(),rw.getHeader());
+      return lastResponse;
+    }
+
+    public ListenableFuture<APINodeList<APINode>> executeAsync() throws APIException {
+      return executeAsync(new HashMap<String, Object>());
+    };
+
+    public ListenableFuture<APINodeList<APINode>> executeAsync(Map<String, Object> extraParams) throws APIException {
+      return Futures.transform(
+        executeAsyncInternal(extraParams),
+        new Function<ResponseWrapper, APINodeList<APINode>>() {
+           public APINodeList<APINode> apply(ResponseWrapper result) {
+             try {
+               return APIRequestGetAugmentedRealitiesMetadata.this.parseResponse(result.getBody(), result.getHeader());
+             } catch (Exception e) {
+               throw new RuntimeException(e);
+             }
+           }
+         }
+      );
+    };
+
+    public APIRequestGetAugmentedRealitiesMetadata(String nodeId, APIContext context) {
+      super(context, nodeId, "/augmented_realities_metadata", "GET", Arrays.asList(PARAMS));
+    }
+
+    @Override
+    public APIRequestGetAugmentedRealitiesMetadata setParam(String param, Object value) {
+      setParamInternal(param, value);
+      return this;
+    }
+
+    @Override
+    public APIRequestGetAugmentedRealitiesMetadata setParams(Map<String, Object> params) {
+      setParamsInternal(params);
+      return this;
+    }
+
+
+    public APIRequestGetAugmentedRealitiesMetadata requestAllFields () {
+      return this.requestAllFields(true);
+    }
+
+    public APIRequestGetAugmentedRealitiesMetadata requestAllFields (boolean value) {
+      for (String field : FIELDS) {
+        this.requestField(field, value);
+      }
+      return this;
+    }
+
+    @Override
+    public APIRequestGetAugmentedRealitiesMetadata requestFields (List<String> fields) {
+      return this.requestFields(fields, true);
+    }
+
+    @Override
+    public APIRequestGetAugmentedRealitiesMetadata requestFields (List<String> fields, boolean value) {
+      for (String field : fields) {
+        this.requestField(field, value);
+      }
+      return this;
+    }
+
+    @Override
+    public APIRequestGetAugmentedRealitiesMetadata requestField (String field) {
+      this.requestField(field, true);
+      return this;
+    }
+
+    @Override
+    public APIRequestGetAugmentedRealitiesMetadata requestField (String field, boolean value) {
+      this.requestFieldInternal(field, value);
+      return this;
+    }
+
+  }
 
   public static class APIRequestGetChannelsToIntegrityStatus extends APIRequest<CatalogItemChannelsToIntegrityStatus> {
 
@@ -524,6 +642,110 @@ public class MediaTitle extends APINode {
       this.requestField("rejection_information", value);
       return this;
     }
+  }
+
+  public static class APIRequestGetVideosMetadata extends APIRequest<APINode> {
+
+    APINodeList<APINode> lastResponse = null;
+    @Override
+    public APINodeList<APINode> getLastResponse() {
+      return lastResponse;
+    }
+    public static final String[] PARAMS = {
+    };
+
+    public static final String[] FIELDS = {
+    };
+
+    @Override
+    public APINodeList<APINode> parseResponse(String response, String header) throws APIException {
+      return APINode.parseResponse(response, getContext(), this, header);
+    }
+
+    @Override
+    public APINodeList<APINode> execute() throws APIException {
+      return execute(new HashMap<String, Object>());
+    }
+
+    @Override
+    public APINodeList<APINode> execute(Map<String, Object> extraParams) throws APIException {
+      ResponseWrapper rw = executeInternal(extraParams);
+      lastResponse = parseResponse(rw.getBody(),rw.getHeader());
+      return lastResponse;
+    }
+
+    public ListenableFuture<APINodeList<APINode>> executeAsync() throws APIException {
+      return executeAsync(new HashMap<String, Object>());
+    };
+
+    public ListenableFuture<APINodeList<APINode>> executeAsync(Map<String, Object> extraParams) throws APIException {
+      return Futures.transform(
+        executeAsyncInternal(extraParams),
+        new Function<ResponseWrapper, APINodeList<APINode>>() {
+           public APINodeList<APINode> apply(ResponseWrapper result) {
+             try {
+               return APIRequestGetVideosMetadata.this.parseResponse(result.getBody(), result.getHeader());
+             } catch (Exception e) {
+               throw new RuntimeException(e);
+             }
+           }
+         }
+      );
+    };
+
+    public APIRequestGetVideosMetadata(String nodeId, APIContext context) {
+      super(context, nodeId, "/videos_metadata", "GET", Arrays.asList(PARAMS));
+    }
+
+    @Override
+    public APIRequestGetVideosMetadata setParam(String param, Object value) {
+      setParamInternal(param, value);
+      return this;
+    }
+
+    @Override
+    public APIRequestGetVideosMetadata setParams(Map<String, Object> params) {
+      setParamsInternal(params);
+      return this;
+    }
+
+
+    public APIRequestGetVideosMetadata requestAllFields () {
+      return this.requestAllFields(true);
+    }
+
+    public APIRequestGetVideosMetadata requestAllFields (boolean value) {
+      for (String field : FIELDS) {
+        this.requestField(field, value);
+      }
+      return this;
+    }
+
+    @Override
+    public APIRequestGetVideosMetadata requestFields (List<String> fields) {
+      return this.requestFields(fields, true);
+    }
+
+    @Override
+    public APIRequestGetVideosMetadata requestFields (List<String> fields, boolean value) {
+      for (String field : fields) {
+        this.requestField(field, value);
+      }
+      return this;
+    }
+
+    @Override
+    public APIRequestGetVideosMetadata requestField (String field) {
+      this.requestField(field, true);
+      return this;
+    }
+
+    @Override
+    public APIRequestGetVideosMetadata requestField (String field, boolean value) {
+      this.requestFieldInternal(field, value);
+      return this;
+    }
+
   }
 
   public static class APIRequestDelete extends APIRequest<APINode> {
@@ -660,6 +882,7 @@ public class MediaTitle extends APINode {
       "title_display_name",
       "unit_price",
       "url",
+      "visibility",
       "wiki_data_item",
     };
 
@@ -885,6 +1108,13 @@ public class MediaTitle extends APINode {
       this.requestField("url", value);
       return this;
     }
+    public APIRequestGet requestVisibilityField () {
+      return this.requestVisibilityField(true);
+    }
+    public APIRequestGet requestVisibilityField (boolean value) {
+      this.requestField("visibility", value);
+      return this;
+    }
     public APIRequestGet requestWikiDataItemField () {
       return this.requestWikiDataItemField(true);
     }
@@ -981,6 +1211,10 @@ public class MediaTitle extends APINode {
       return this;
     }
 
+    public APIRequestUpdate setContentCategory (MediaTitle.EnumContentCategory contentCategory) {
+      this.setParam("content_category", contentCategory);
+      return this;
+    }
     public APIRequestUpdate setContentCategory (String contentCategory) {
       this.setParam("content_category", contentCategory);
       return this;
@@ -1086,6 +1320,52 @@ public class MediaTitle extends APINode {
 
   }
 
+  public static enum EnumImageFetchStatus {
+      @SerializedName("DIRECT_UPLOAD")
+      VALUE_DIRECT_UPLOAD("DIRECT_UPLOAD"),
+      @SerializedName("FETCHED")
+      VALUE_FETCHED("FETCHED"),
+      @SerializedName("FETCH_FAILED")
+      VALUE_FETCH_FAILED("FETCH_FAILED"),
+      @SerializedName("NO_STATUS")
+      VALUE_NO_STATUS("NO_STATUS"),
+      @SerializedName("OUTDATED")
+      VALUE_OUTDATED("OUTDATED"),
+      @SerializedName("PARTIAL_FETCH")
+      VALUE_PARTIAL_FETCH("PARTIAL_FETCH"),
+      ;
+
+      private String value;
+
+      private EnumImageFetchStatus(String value) {
+        this.value = value;
+      }
+
+      @Override
+      public String toString() {
+        return value;
+      }
+  }
+
+  public static enum EnumVisibility {
+      @SerializedName("PUBLISHED")
+      VALUE_PUBLISHED("PUBLISHED"),
+      @SerializedName("STAGING")
+      VALUE_STAGING("STAGING"),
+      ;
+
+      private String value;
+
+      private EnumVisibility(String value) {
+        this.value = value;
+      }
+
+      @Override
+      public String toString() {
+        return value;
+      }
+  }
+
   public static enum EnumContentCategory {
       @SerializedName("MOVIE")
       VALUE_MOVIE("MOVIE"),
@@ -1141,6 +1421,7 @@ public class MediaTitle extends APINode {
     this.mTitleDisplayName = instance.mTitleDisplayName;
     this.mUnitPrice = instance.mUnitPrice;
     this.mUrl = instance.mUrl;
+    this.mVisibility = instance.mVisibility;
     this.mWikiDataItem = instance.mWikiDataItem;
     this.context = instance.context;
     this.rawValue = instance.rawValue;
